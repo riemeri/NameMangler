@@ -37,6 +37,12 @@ public class MainActivity extends AppCompatActivity {
 
         mNameBox = (EditText) findViewById(R.id.name_text);
 
+        if (savedInstanceState != null) {
+            mFirstName = savedInstanceState.getString(FIRST_NAME, "");
+            mNameBox.setText(mFirstName);
+        }
+
+        //Create button and set onClickListener
         mMangleButton = (Button) findViewById(R.id.mangle_button);
         mMangleButton.setOnClickListener(new View.OnClickListener() {
             @Override

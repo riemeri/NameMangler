@@ -1,8 +1,15 @@
 <resources>
     <string name="app_name">NameMangler</string>
-    <string name="name1">Magnificent</string>
-    <string name="name2">Thugnificent</string>
-    <string name="name3">Mediocre</string>
-    <string name="name4">Kensington III</string>
-    <string name="name5">Barkley</string>
+    <string-array name="lastNameList">
+        <item>Magnificent</item>
+        <item>Thugnificent</item>
+        <item>Mediocre</item>
+        <item>Kensington III</item>
+        <item>Barkley</item>
+        <item>Potter</item>
+        <item>Mangler</item>
+        <item>Nobunaga</item>
+        <item>Kazuhiro</item>
+        <item>Arrivabene</item>
+    </string-array>
 </resources>

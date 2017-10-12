@@ -12,22 +12,31 @@ import java.util.Random;
  * Created by Ian on 10/9/2017.
  */
 
-public class Name extends AppCompatActivity {
+//Name model object for managing name information
+public class Name {
 
     private String mFirstName;
     private String mLastName;
 
-    private List<String> mLastNames;
+    private String[] mLastNames;
 
-    public Name(Resources res){
-        setNameList(res);
+    public Name(String[] lastNames){
+        mFirstName = "Default";
+        mLastNames = lastNames;
         randomizeLastName();
     }
 
-    public Name(String firstName, Resources res) {
+    public Name(String firstName, String[] lastNames) {
         mFirstName = firstName;
-        setNameList(res);
+        mLastNames = lastNames;
         randomizeLastName();
+    }
+
+    //Constructor option to retain a previously used last name. Made for "resuming" after instance state changes
+    public Name(String firstName, String[] lastNames, String currentLastName){
+        mFirstName = firstName;
+        mLastName = currentLastName;
+        mLastNames = lastNames;
     }
 
     public String getFirstName() {
@@ -49,10 +58,11 @@ public class Name extends AppCompatActivity {
         this.mLastName = mLastName;
     }
 
-    public String getWholeName() {
+    public String getFullName() {
         return mFirstName + " " + getLastName();
     }
 
+    //Function to set the last name to a random name from the list
     public  void randomizeLastName() {
         int rand = 0;
         String lastName;
@@ -64,25 +74,16 @@ public class Name extends AppCompatActivity {
             mLastName = "";
         }
         
-        if (mLastNames.size() > 0) {
+        if (mLastNames.length > 0) {
             do {
                 rand = random.nextInt();
                 rand = Math.abs(rand);
-                rand = rand % 5;
-                lastName = mLastNames.get(rand);
+                rand = rand % mLastNames.length;
+                lastName = mLastNames[rand];
             }
             while (lastName.compareTo(mLastName) == 0);
 
             mLastName = lastName;
         }
-    }
-
-    private void setNameList(Resources res) {
-        mLastNames = new ArrayList<>();
-        mLastNames.add(res.getString(R.string.name1));
-        mLastNames.add(res.getString(R.string.name2));
-        mLastNames.add(res.getString(R.string.name3));
-        mLastNames.add(res.getString(R.string.name4));
-        mLastNames.add(res.getString(R.string.name5));
     }
 }

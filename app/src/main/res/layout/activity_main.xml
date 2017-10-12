@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:gravity="center">
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center|top"
-        android:padding="64dp"
+        android:layout_marginBottom="24dp"
+        android:padding="24dp"
         android:text="Name Mangler"
         android:textAlignment="center"
         android:textColor="@android:color/black"
@@ -30,20 +31,22 @@
     <EditText
         android:id="@+id/name_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="46dp"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
-        android:padding="10dp"/>
+        android:padding="10dp"
+        android:singleLine="true"/>
 
     <Button
         android:id="@+id/mangle_button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="42dp"
         android:layout_marginLeft="100dp"
         android:layout_marginRight="100dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="46dp"
         android:text="Mangle!"
         android:textAllCaps="false"
-        android:textSize="16sp" />
+        android:textSize="16sp"/>
 
 </LinearLayout>
