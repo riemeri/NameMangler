@@ -3,8 +3,6 @@ package com.oregonstate.riemeri.namemangler;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,19 +10,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private static final String FIRST_NAME = "firstName";
     private static final int REQUEST_CODE_RESET = 0;
 
-    private Button mMangleButton;
+    private Button mMangleNicelyButton;
+    private Button mMangleRudelyButton;
     private EditText mNameBox;
 
     private String mFirstName;
@@ -42,15 +36,14 @@ public class MainActivity extends AppCompatActivity {
             mNameBox.setText(mFirstName);
         }
 
-        //Create button and set onClickListener
-        mMangleButton = (Button) findViewById(R.id.mangle_button);
-        mMangleButton.setOnClickListener(new View.OnClickListener() {
+        mMangleNicelyButton = (Button) findViewById(R.id.mangle_nicely);
+        mMangleNicelyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String firstName = mNameBox.getText().toString().trim();
                 if (firstName.length() > 0) {
                     mFirstName = firstName;
-                    Intent intent = MangledNameActivity.newIntent(MainActivity.this, mFirstName);
+                    Intent intent = MangledNameActivity.newIntent(MainActivity.this, mFirstName, false);
                     startActivityForResult(intent, REQUEST_CODE_RESET);
                 }
                 else {
@@ -60,6 +53,27 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        //Create button and set onClickListener
+        mMangleRudelyButton = (Button) findViewById(R.id.mangle_rudely);
+        mMangleRudelyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String firstName = mNameBox.getText().toString().trim();
+                if (firstName.length() > 0) {
+                    mFirstName = firstName;
+                    Intent intent = MangledNameActivity.newIntent(MainActivity.this, mFirstName, true);
+                    startActivityForResult(intent, REQUEST_CODE_RESET);
+                }
+                else {
+                    Context context = getApplicationContext();
+                    Toast toast = Toast.makeText(context, "No name entered. Please enter a name.", Toast.LENGTH_LONG);
+                    toast.show();
+                }
+            }
+        });
+
+
     }
 
     @Override

@@ -38,15 +38,28 @@
         android:singleLine="true"/>
 
     <Button
-        android:id="@+id/mangle_button"
+        android:id="@+id/mangle_nicely"
         android:layout_width="match_parent"
         android:layout_height="42dp"
         android:layout_marginLeft="100dp"
         android:layout_marginRight="100dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="46dp"
-        android:text="Mangle!"
+        android:text="Mangle Nicely"
         android:textAllCaps="false"
         android:textSize="16sp"/>
+
+    <Button
+        android:id="@+id/mangle_rudely"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_marginBottom="46dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="100dp"
+        android:layout_marginTop="10dp"
+        android:text="Mangle Rudely"
+        android:textAllCaps="false"
+        android:textSize="16sp" />
+
 
 </LinearLayout>

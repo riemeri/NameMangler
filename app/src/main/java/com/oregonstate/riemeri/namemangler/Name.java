@@ -1,11 +1,7 @@
 package com.oregonstate.riemeri.namemangler;
 
-import android.content.res.Resources;
 import android.os.SystemClock;
-import android.support.v7.app.AppCompatActivity;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -18,25 +14,28 @@ public class Name {
     private String mFirstName;
     private String mLastName;
 
-    private String[] mLastNames;
+    private String[] mNiceNames;
+    private String[] mRudeNames;
 
-    public Name(String[] lastNames){
+    public Name(String[] niceNames, String[] rudeNames){
         mFirstName = "Default";
-        mLastNames = lastNames;
-        randomizeLastName();
+        mNiceNames = niceNames;
+        mRudeNames = rudeNames;
+        randomizeNiceName();
     }
 
-    public Name(String firstName, String[] lastNames) {
+    public Name(String firstName, String[] niceNames, String[] rudeNames) {
         mFirstName = firstName;
-        mLastNames = lastNames;
-        randomizeLastName();
+        mNiceNames = niceNames;
+        mRudeNames = rudeNames;
+        randomizeNiceName();
     }
 
     //Constructor option to retain a previously used last name. Made for "resuming" after instance state changes
     public Name(String firstName, String[] lastNames, String currentLastName){
         mFirstName = firstName;
         mLastName = currentLastName;
-        mLastNames = lastNames;
+        mNiceNames = lastNames;
     }
 
     public String getFirstName() {
@@ -49,7 +48,7 @@ public class Name {
 
     public String getLastName() {
         if (mLastName == null || mLastName.length() < 2) {
-            randomizeLastName();
+            randomizeNiceName();
         }
         return mLastName;
     }
@@ -63,7 +62,7 @@ public class Name {
     }
 
     //Function to set the last name to a random name from the list
-    public  void randomizeLastName() {
+    public  void randomizeNiceName() {
         int rand = 0;
         String lastName;
 
@@ -74,12 +73,36 @@ public class Name {
             mLastName = "";
         }
         
-        if (mLastNames.length > 0) {
+        if (mNiceNames.length > 0) {
             do {
                 rand = random.nextInt();
                 rand = Math.abs(rand);
-                rand = rand % mLastNames.length;
-                lastName = mLastNames[rand];
+                rand = rand % mNiceNames.length;
+                lastName = mNiceNames[rand];
+            }
+            while (lastName.compareTo(mLastName) == 0);
+
+            mLastName = lastName;
+        }
+    }
+
+    public  void randomizeRudeName() {
+        int rand = 0;
+        String lastName;
+
+        Random random = new Random();
+        random.setSeed(SystemClock.currentThreadTimeMillis());
+
+        if (mLastName == null) {
+            mLastName = "";
+        }
+
+        if (mRudeNames.length > 0) {
+            do {
+                rand = random.nextInt();
+                rand = Math.abs(rand);
+                rand = rand % mRudeNames.length;
+                lastName = mRudeNames[rand];
             }
             while (lastName.compareTo(mLastName) == 0);
 

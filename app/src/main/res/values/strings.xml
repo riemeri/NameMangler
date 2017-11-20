@@ -1,15 +1,17 @@
 <resources>
     <string name="app_name">NameMangler</string>
-    <string-array name="lastNameList">
+    <string-array name="niceNameList">
         <item>Magnificent</item>
         <item>Thugnificent</item>
+        <item>Radiant</item>
+        <item>The Great</item>
+        <item>The Conquerer</item>
+    </string-array>
+    <string-array name="rudeNameList">
+        <item>Arseface</item>
         <item>Mediocre</item>
-        <item>Kensington III</item>
-        <item>Barkley</item>
-        <item>Potter</item>
-        <item>Mangler</item>
-        <item>Nobunaga</item>
-        <item>Kazuhiro</item>
-        <item>Arrivabene</item>
+        <item>Doucher</item>
+        <item>Fails-a-lot</item>
+        <item>Monkeyface</item>
     </string-array>
 </resources>
