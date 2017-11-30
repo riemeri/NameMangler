@@ -3,10 +3,16 @@ package com.oregonstate.riemeri.namemangler;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Display;
+import android.view.Surface;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +25,7 @@ public class MangledNameActivity extends AppCompatActivity {
     private static final String EXTRA_IS_RUDE = "com.oregonstate.riemeri.namemangler.is_rude";
     private static final String FULL_NAME = "fullName";
     private static final String LAST_NAME = "lastName";
+    private static final String IS_RUDE = "mIsRude";
 
     private Button mResetButton;
     private Button mRemangleButton;
@@ -28,7 +35,7 @@ public class MangledNameActivity extends AppCompatActivity {
     private String mFullName;
     private String mLastName;
     private Name mName;
-    private Boolean isRude;
+    private Boolean mIsRude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +47,21 @@ public class MangledNameActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             mFullName = savedInstanceState.getString(FULL_NAME, mFullName);
             mLastName = savedInstanceState.getString(LAST_NAME, mLastName);
+            mIsRude = savedInstanceState.getBoolean(IS_RUDE, false);
+
             mName = new Name(getIntent().getStringExtra(EXTRA_FIRST_NAME),
-                    res.getStringArray(R.array.niceNameList), mLastName);
+                    res.getStringArray(R.array.rudeNameList),
+                    res.getStringArray(R.array.niceNameList),
+                    mLastName);
         }
         else {
-            mName = new Name(getIntent().getStringExtra(EXTRA_FIRST_NAME), res.getStringArray(R.array.niceNameList),
+            mName = new Name(getIntent().getStringExtra(EXTRA_FIRST_NAME),
+                    res.getStringArray(R.array.niceNameList),
                     res.getStringArray(R.array.rudeNameList));
-            isRude = getIntent().getBooleanExtra(EXTRA_IS_RUDE, false);
-            if (isRude) {
+
+            mIsRude = getIntent().getBooleanExtra(EXTRA_IS_RUDE, false);
+
+            if (mIsRude) {
                 mName.randomizeRudeName();
             }
             else {
@@ -57,7 +71,7 @@ public class MangledNameActivity extends AppCompatActivity {
             mLastName = mName.getLastName();
         }
 
-        if (isRude) {
+        if (mIsRude) {
             setContentView(R.layout.activity_mangled_name_rude);
         } else {
             setContentView(R.layout.activity_mangled_name_nice);
@@ -80,7 +94,7 @@ public class MangledNameActivity extends AppCompatActivity {
         mRemangleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isRude) {
+                if (mIsRude) {
                     mName.randomizeRudeName();
                 }
                 else {
@@ -94,11 +108,37 @@ public class MangledNameActivity extends AppCompatActivity {
 
         mImageView = (ImageView) findViewById(R.id.imageView);
 
-        if (isRude) {
+        if (!DeviceIsInPortraitOrientation()) {
+            ViewGroup.LayoutParams myParams = mImageView.getLayoutParams();
+            int currentDisplayHeight = displayHeight();
+            myParams.width = (displayHeight() / 3) * 2; //- 500;
+            mImageView.setLayoutParams(myParams);
+        }
+
+        if (mIsRude) {
             mImageView.setImageResource(R.drawable.rude_again);
         } else {
             mImageView.setImageResource(R.drawable.amazing_butterfly);
         }
+    }
+
+    private boolean DeviceIsInPortraitOrientation() {
+        Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
+        int orientation = display.getRotation();
+        if(orientation == Surface.ROTATION_90 || orientation == Surface.ROTATION_270) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    private int displayHeight(){
+        Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
+        Point screenSize = new Point();
+        display.getSize(screenSize);
+        return screenSize.y;
+
     }
 
     @Override
@@ -106,6 +146,7 @@ public class MangledNameActivity extends AppCompatActivity {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putString(FULL_NAME, mFullName);
         savedInstanceState.putString(LAST_NAME, mLastName);
+        savedInstanceState.putBoolean(IS_RUDE, mIsRude);
     }
 
     public static Intent newIntent(Context packageContext, String firstName, boolean isRude) {

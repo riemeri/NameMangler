@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">NameMangler</string>
+    <string name="name_mangler">Name Mangler</string>
+    <string name="first_name_label">First Name: </string>
+    <string name="mangle_nicely">Mangle Nicely</string>
+    <string name="mangle_rudely">Mangle Rudely</string>
+    <string name="reset">Reset</string>
+    <string name="remangle">Re-Mangle!</string>
     <string-array name="niceNameList">
         <item>Magnificent</item>
         <item>Thugnificent</item>
@@ -11,7 +17,7 @@
         <item>Arseface</item>
         <item>Mediocre</item>
         <item>Doucher</item>
-        <item>Fails-a-lot</item>
+        <item>Fails-a-Lot</item>
         <item>Monkeyface</item>
     </string-array>
 </resources>

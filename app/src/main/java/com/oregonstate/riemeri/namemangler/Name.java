@@ -32,10 +32,11 @@ public class Name {
     }
 
     //Constructor option to retain a previously used last name. Made for "resuming" after instance state changes
-    public Name(String firstName, String[] lastNames, String currentLastName){
+    public Name(String firstName, String[] lastNames, String[] rudeNames, String currentLastName){
         mFirstName = firstName;
         mLastName = currentLastName;
         mNiceNames = lastNames;
+        mRudeNames = rudeNames;
     }
 
     public String getFirstName() {
